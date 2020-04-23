@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface GenerateCodeService {
 
-    public Map generateCodeByContent(String Content,Integer size,Integer color);
+    public Map generateCodeByContent(String Content,Integer size,Integer color,String type);
 }

@@ -24,27 +24,18 @@ public class TestController {
     @Autowired
     private GenerateCodeService generateCodeService;
 
-    @ResponseBody
-    @ApiOperation(value = "根据文本内容生成二维码",notes = "根据文本内容生成二维码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Content", value = "Content", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "size", value = "size", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "color", value = "color", dataType = "Integer", paramType = "query")
-    })
-    @RequestMapping(value = "/generateCodeByContent",method = RequestMethod.POST)
-    public Map generateCodeByContent( String Content, Integer size,Integer color) {
-        return generateCodeService.generateCodeByContent(Content,size,color);
-    }
+
 
     @ResponseBody
     @ApiOperation(value = "根据文本内容生成二维码",notes = "根据文本内容生成二维码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Content", value = "Content", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "size", value = "size", dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "color", value = "color", dataType = "Integer", paramType = "query")
+            @ApiImplicitParam(name = "color", value = "color", dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "type", dataType = "String", paramType = "query")
     })
     @RequestMapping(value = "/generateCodeByContent2",method = RequestMethod.GET)
-    public Map generateCodeByContent2( String Content, Integer size,Integer color) {
-        return generateCodeService.generateCodeByContent(Content,size,color);
+    public Map generateCodeByContent2( String Content, Integer size,Integer color,String type) {
+        return generateCodeService.generateCodeByContent(Content,size,color,type);
     }
 }
