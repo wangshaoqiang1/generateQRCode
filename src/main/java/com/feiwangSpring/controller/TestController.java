@@ -3,6 +3,7 @@ package com.feiwangSpring.controller;
 import com.feiwangSpring.entity.SysUser;
 import com.feiwangSpring.service.GenerateCodeService;
 import com.feiwangSpring.service.ISysUserService;
+import com.feiwangSpring.service.TestService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -27,9 +29,12 @@ public class TestController {
     private GenerateCodeService generateCodeService;
     @Autowired
     private ISysUserService sysUserService;
+    @Resource(name = "userService2")
+    private TestService userService;
     @ResponseBody
     @RequestMapping(value="/user",method = RequestMethod.GET)
     public SysUser getUser() {
+        userService.findById(1L);
         return sysUserService.findById(1L);
     }
     @ResponseBody
