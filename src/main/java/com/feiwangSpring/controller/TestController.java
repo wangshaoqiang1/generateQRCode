@@ -1,6 +1,8 @@
 package com.feiwangSpring.controller;
 
+import com.feiwangSpring.entity.SysUser;
 import com.feiwangSpring.service.GenerateCodeService;
+import com.feiwangSpring.service.ISysUserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -23,9 +25,13 @@ import java.util.Map;
 public class TestController {
     @Autowired
     private GenerateCodeService generateCodeService;
-
-
-
+    @Autowired
+    private ISysUserService sysUserService;
+    @ResponseBody
+    @RequestMapping(value="/user",method = RequestMethod.GET)
+    public SysUser getUser() {
+        return sysUserService.findById(1L);
+    }
     @ResponseBody
     @ApiOperation(value = "根据文本内容生成二维码",notes = "根据文本内容生成二维码")
     @ApiImplicitParams({
