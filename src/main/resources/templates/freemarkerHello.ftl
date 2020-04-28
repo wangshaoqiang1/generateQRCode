@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>hello freemarker</h1>
+${name}
+</body>
+</html>

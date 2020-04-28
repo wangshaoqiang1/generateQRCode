@@ -2,9 +2,11 @@ package com.feiwangSpring.config;
 
 import com.feiwangSpring.entity.SysLog;
 import com.feiwangSpring.service.ISysLogService;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
@@ -20,8 +22,7 @@ import java.util.Date;
  * @version 1.0
  * @date 2020/4/26 16:11
  */
-@Aspect
-@Component
+
 public class LogAsPect {
 
     private final static Logger log = org.slf4j.LoggerFactory.getLogger(LogAsPect.class);
@@ -33,6 +34,10 @@ public class LogAsPect {
     @Pointcut("@annotation(com.feiwangSpring.config.Log)")
     public void pointcut() {}
 
+    @Pointcut("execution(public * com.feiwangSpring.controller..*.*(..))")
+    public void pointcutController() {}
+
+
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) {
         Object result =null;
@@ -41,6 +46,7 @@ public class LogAsPect {
         try {
             log.info("我在目标方法之前执行！");
             result = point.proceed();
+            log.info("这里是方法返回的对象："+result);
             long endTime = System.currentTimeMillis();
             insertLog(point,endTime-beginTime);
         } catch (Throwable e) {
@@ -49,6 +55,16 @@ public class LogAsPect {
         return result;
     }
 
+    @Before("pointcutController()")
+    public void around2(JoinPoint point) {
+        //获取目标方法
+        String methodNam = point.getSignature().getDeclaringTypeName() + "." + point.getSignature().getName();
+
+        //获取方法参数
+        String params = Arrays.toString(point.getArgs());
+
+        log.info("get in {} params :{}",methodNam,params);
+    }
     private void insertLog(ProceedingJoinPoint point ,long time) {
         MethodSignature signature = (MethodSignature)point.getSignature();
         Method method = signature.getMethod();
